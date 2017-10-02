@@ -37,6 +37,7 @@
       <th v-for="(player, index) in players" class="text-right display-2">
         <h2>
           {{ player.name }}
+          <span v-if="player.getRemainingScore(targetScore) === 0">👑 </span>
           <br />
           {{ player.getRemainingScore(targetScore) }}
           <span v-if="canRemovePlayers" v-on:click="removePlayer(index)">

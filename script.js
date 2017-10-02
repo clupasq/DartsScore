@@ -127,14 +127,22 @@ var app = new Vue({
 // // app.addPlayer('axl');
 //
 
-var clay = new Player('Clay');
-var macy = new Player('Macy');
 
-clay.scores = [10, 180, 33, 52];
-macy.scores = [2, 54, 78, 88];
+var addTestPlayerScores = function() {
+  var clay = new Player('Clay');
+  var macy = new Player('Macy');
+  clay.scores = [10, 180, 33, 52];
+  macy.scores = [2, 54, 78, 88];
+  app.players = [clay, macy, clay, macy];
+};
 
-console.log(clay.getCummulativeScores(app.targetScore));
+var addUsualPlayers = function() {
+  app.addPlayer('Adrian');
+  app.addPlayer('Bogdan');
+  app.addPlayer('Radu');
+  app.addPlayer('Cristi');
+}
 
-app.players = [clay, macy, clay, macy];
+addUsualPlayers();
 
 app.focusOnNewScore();
