@@ -49,7 +49,7 @@
       <td v-for="player in players">
         <div v-on:click="modifyScore(player, round)">
           <h3>
-            <div v-if="showCummulativeScore">
+            <div v-if="showCummulativeScore" v-bind:style="{ backgroundColor: getColor(player.getCummulativeScores(targetScore)[round]) }">
               {{ player.getCummulativeScores(targetScore)[round] }}
             </div>
             <div v-if="!showCummulativeScore">
@@ -62,7 +62,7 @@
   </table>
   <button class="btn btn-default" v-on:click="addPlayer()">Add Player</button>
   <button class="btn btn-default" v-on:click="toggleRemovePlayers()">Remove Player(s)</button>
-  <button class="btn btn-default" v-on:click="toggleCummulativeScore()">Show Cummulative Score</button>
+  <button class="btn btn-default" v-on:click="toggleCummulativeScore()">Toggle Cummulative Score</button>
 </div>
 <script type="text/javascript" charset="utf-8" src="lib/vue.js"> </script>
 <script type="text/javascript" charset="utf-8" src="script.js"> </script>

@@ -111,7 +111,13 @@ var app = new Vue({
     rounds: function () {
       var rr= _.range(this.getRoundCount());
       return _.range(this.getRoundCount());
+    },
+
+    getColor: function(score) {
+      var level = Math.floor(score / 100);
+      return `rgb(${level * 30 + 200}, ${255 - level * 10}, ${255 - level * 20})`;
     }
+
   }
 });
 
@@ -129,6 +135,6 @@ macy.scores = [2, 54, 78, 88];
 
 console.log(clay.getCummulativeScores(app.targetScore));
 
-app.players = [clay, macy];
+app.players = [clay, macy, clay, macy];
 
 app.focusOnNewScore();
