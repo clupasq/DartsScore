@@ -1,5 +1,4 @@
 
-
 var Player = function(name) {
   this.name = name;
   this.scores = [];
@@ -18,6 +17,7 @@ var app = new Vue({
     targetScore: 301,
     players: [],
     score: '',
+    canRemovePlayers: false,
 
     addPlayer: function(name){
       if (this.players.length >= MAX_PLAYER_COUNT) {
@@ -66,6 +66,18 @@ var app = new Vue({
       }
       player.scores[round] = newScore;
       this.$forceUpdate();
+    },
+
+    toggleRemovePlayers: function() {
+      this.canRemovePlayers = !this.canRemovePlayers;
+    },
+
+    removePlayer: function(index) {
+      var playerToRemove = this.players[index];
+      var result = window.confirm(`Are you sure ${playerToRemove.name} wants to leave?`);
+      if (result) {
+        this.players.splice(index, 1);
+      }
     },
 
     addScore: function() {
