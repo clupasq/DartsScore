@@ -11,7 +11,13 @@
 </head>
 <body>
 <div id="app" class="container-fluid">
-  <h1>Superdarts</h1>
+  <h1>
+    Superdarts
+    <select v-model="targetScore">
+      <option>301</option>
+      <option>501</option>
+    </select>
+  </h1>
   <div class="row well">
     <div class="col-6">
       Next player is:
