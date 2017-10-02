@@ -7,6 +7,13 @@ var Player = function(name) {
     var scored = _.sum(this.scores) || 0;
     return targetScore - scored;
   };
+
+  this.getCummulativeScores = function (targetScore) {
+    var crt = targetScore;
+    var cs = [];
+    this.scores.forEach(s => { crt -= s; cs.push(crt); });
+    return cs;
+  }
 };
 
 var MAX_PLAYER_COUNT = 8;
@@ -18,6 +25,7 @@ var app = new Vue({
     players: [],
     score: '',
     canRemovePlayers: false,
+    showCummulativeScore: false,
 
     addPlayer: function(name){
       if (this.players.length >= MAX_PLAYER_COUNT) {
@@ -68,6 +76,10 @@ var app = new Vue({
       this.$forceUpdate();
     },
 
+    toggleCummulativeScore: function() {
+      this.showCummulativeScore = !this.showCummulativeScore;
+    },
+
     toggleRemovePlayers: function() {
       this.canRemovePlayers = !this.canRemovePlayers;
     },
@@ -97,19 +109,26 @@ var app = new Vue({
     },
 
     rounds: function () {
-      console.log("value");
       var rr= _.range(this.getRoundCount());
-      console.log(rr );
       return _.range(this.getRoundCount());
     }
   }
 });
 
 
-app.addPlayer('clay');
-app.addPlayer('macy');
-// app.addPlayer('aaron');
-// app.addPlayer('lance');
-// app.addPlayer('axl');
+// app.addPlayer('clay');
+// app.addPlayer('macy');
+// // app.addPlayer('axl');
+//
+
+var clay = new Player('Clay');
+var macy = new Player('Macy');
+
+clay.scores = [10, 180, 33, 52];
+macy.scores = [2, 54, 78, 88];
+
+console.log(clay.getCummulativeScores(app.targetScore));
+
+app.players = [clay, macy];
 
 app.focusOnNewScore();
