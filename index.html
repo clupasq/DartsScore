@@ -37,7 +37,9 @@
     </tr>
     <tr v-for="round in rounds()">
       <td v-for="player in players">
-        {{ player.scores[round] }}
+        <div v-on:click="modifyScore(player, round)">
+          {{ player.scores[round] }}
+        </div>
       </td>
     </tr>
   </table>

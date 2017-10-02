@@ -48,6 +48,26 @@ var app = new Vue({
       scoreEl.focus();
     },
 
+    modifyScore: function(player, round) {
+      var existingScore = player.scores[round];
+      if (isNaN(existingScore)) {
+        return;
+      }
+      var newScore = window.prompt(`Enter the new score for player ${player.name}, round ${round}`, existingScore);
+      var newScore = parseInt(newScore, 10);
+      if (isNaN(newScore) || newScore < 0 || newScore > 180) {
+        alert('Invalid score!');
+        return;
+      }
+      var newRemaining = this.targetScore - (_.sum(player.scores) || 0) + existingScore - newScore;
+      if (newRemaining < 0) {
+        alert('Cannot go below 0!!!');
+        return
+      }
+      player.scores[round] = newScore;
+      this.$forceUpdate();
+    },
+
     addScore: function() {
       var newScore = parseInt(this.score, 10);
       if (isNaN(newScore) || newScore < 0 || newScore > 180){
