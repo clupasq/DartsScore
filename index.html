@@ -17,6 +17,9 @@
       <option>301</option>
       <option>501</option>
     </select>
+    <button class="btn btn-default" v-on:click="addPlayer()">Add Player</button>
+    <button class="btn btn-default" v-on:click="toggleRemovePlayers()">Remove Player(s)</button>
+    <button class="btn btn-default" v-on:click="toggleCummulativeScore()">{{ toggleScoreText() }}</button>
   </h1>
   <div class="row well">
     <div class="col-6">
@@ -35,7 +38,7 @@
   <table class="table table-striped table-responsive table-condensed">
     <tr>
       <th v-for="(player, index) in players" class="text-right display-2">
-        <h2>
+        <h3>
           {{ player.name }}
           <span v-if="player.getRemainingScore(targetScore) === 0">👑 </span>
           <br />
@@ -47,23 +50,20 @@
       </th>
     </tr>
     <tr v-for="round in rounds()" class="text-right">
-      <td v-for="player in players">
+      <td v-for="player in players" v-bind:style="{ backgroundColor: getColor(player.getCummulativeScores(targetScore)[round]) }">
         <div v-on:click="modifyScore(player, round)">
-          <h3>
-            <div v-if="showCummulativeScore" v-bind:style="{ backgroundColor: getColor(player.getCummulativeScores(targetScore)[round]) }">
+          <h4>
+            <div v-if="showCummulativeScore" >
               {{ player.getCummulativeScores(targetScore)[round] }}
             </div>
             <div v-if="!showCummulativeScore">
               {{ player.scores[round] }}
             </div>
-          </h3>
+          </h4>
         </div>
       </td>
     </tr>
   </table>
-  <button class="btn btn-default" v-on:click="addPlayer()">Add Player</button>
-  <button class="btn btn-default" v-on:click="toggleRemovePlayers()">Remove Player(s)</button>
-  <button class="btn btn-default" v-on:click="toggleCummulativeScore()">Toggle Cummulative Score</button>
 </div>
 <script type="text/javascript" charset="utf-8" src="lib/vue.js"> </script>
 <script type="text/javascript" charset="utf-8" src="script.js"> </script>

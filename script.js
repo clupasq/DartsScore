@@ -116,16 +116,14 @@ var app = new Vue({
     getColor: function(score) {
       var level = Math.floor(score / 100);
       return `rgb(${level * 30 + 200}, ${255 - level * 10}, ${255 - level * 20})`;
+    },
+
+    toggleScoreText: function() {
+      return this.showCummulativeScore ? "Switch to normal scores" : "Switch to cummulative scores";
     }
 
   }
 });
-
-
-// app.addPlayer('clay');
-// app.addPlayer('macy');
-// // app.addPlayer('axl');
-//
 
 
 var addTestPlayerScores = function() {
@@ -144,5 +142,6 @@ var addUsualPlayers = function() {
 }
 
 addUsualPlayers();
+// addTestPlayerScores();
 
 app.focusOnNewScore();
