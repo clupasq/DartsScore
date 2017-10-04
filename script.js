@@ -34,6 +34,7 @@ var app = new Vue({
       }
       name = name || prompt("Enter name: ");
       this.players.push(new Player(name));
+      this.save();
     },
 
     getRoundCount: function() {
@@ -74,6 +75,7 @@ var app = new Vue({
       }
       player.scores[round] = newScore;
       this.$forceUpdate();
+      this.save();
     },
 
     toggleCummulativeScore: function() {
@@ -89,6 +91,7 @@ var app = new Vue({
       var result = window.confirm(`Are you sure ${playerToRemove.name} wants to leave?`);
       if (result) {
         this.players.splice(index, 1);
+        this.save();
       }
     },
 
@@ -104,12 +107,13 @@ var app = new Vue({
       }
       if (newScore > nextPlayer.getRemainingScore(this.targetScore)) { newScore = 0; }
       nextPlayer.scores.push(newScore);
+      this.save();
       this.score = '';
       this.focusOnNewScore();
     },
 
     rounds: function () {
-      var rr= _.range(this.getRoundCount());
+      var rr = _.range(this.getRoundCount());
       return _.range(this.getRoundCount());
     },
 
@@ -119,9 +123,30 @@ var app = new Vue({
     },
 
     toggleScoreText: function() {
-      return this.showCummulativeScore ? "Switch to normal scores" : "Switch to cummulative scores";
-    }
+      return this.showCummulativeScore ? "Use normal scores" : "Use cummulative scores";
+    },
 
+    save: function() {
+      localStorage.gameData = JSON.stringify({
+        target: this.targetScore,
+        players: this.players
+      });
+    },
+
+    load: function() {
+      try {
+        var gameData = JSON.parse(localStorage.gameData);
+        this.players = gameData.players.map(p => {
+          var pl = new Player(p.name);
+          pl.scores = p.scores;
+          return pl;
+        });
+        this.targetScore = gameData.target || 301;
+      } catch(e) {
+        this.players = [ new Player('Player1') ];
+        this.targetScore = 301;
+      }
+    }
   }
 });
 
@@ -141,7 +166,8 @@ var addUsualPlayers = function() {
   app.addPlayer('Cristi');
 }
 
-addUsualPlayers();
+// addUsualPlayers();
 // addTestPlayerScores();
+app.load();
 
 app.focusOnNewScore();
