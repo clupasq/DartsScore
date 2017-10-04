@@ -123,7 +123,15 @@ var app = new Vue({
     },
 
     toggleScoreText: function() {
-      return this.showCummulativeScore ? "Use normal scores" : "Use cummulative scores";
+      return this.showCummulativeScore ? 'Use normal scores' : 'Use cummulative scores';
+    },
+
+    newGame: function() {
+      var confirmation = window.confirm('Are you sure you want to start a new game?');
+      if (confirmation) {
+        this.players.forEach(p => p.scores = []);
+        this.save();
+      }
     },
 
     save: function() {
