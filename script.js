@@ -43,7 +43,7 @@ var app = new Vue({
 
     getNextPlayer: function() {
       var playersWithIndices = this.players.map((p, i) => ({player: p, index: i}));
-      var next = _.minBy(playersWithIndices, x => [x.player.scores.length, x.index]);
+      var next = _.minBy(playersWithIndices, x => x.player.scores.length * 1e9 + x.index);
       return next && next.player;
     },
 
