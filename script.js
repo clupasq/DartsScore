@@ -3,15 +3,15 @@ var Player = function(name) {
   this.name = name;
   this.scores = [];
 
-  this.getRemainingScore = function (targetScore) {
+  this.getRemainingScore = function(targetScore) {
     var scored = _.sum(this.scores) || 0;
     return targetScore - scored;
   };
 
-  this.getCummulativeScores = function (targetScore) {
+  this.getCummulativeScores = function(targetScore) {
     var crt = targetScore;
     var cs = [];
-    this.scores.forEach(s => { crt -= s; cs.push(crt); });
+    this.scores.forEach(function(s) { crt -= s; cs.push(crt); });
     return cs;
   }
 };
@@ -38,12 +38,12 @@ var app = new Vue({
     },
 
     getRoundCount: function() {
-      return _.max(this.players.map(p => p.scores.length)) || 0;
+      return _.max(this.players.map(function(p){ return  p.scores.length; })) || 0;
     },
 
     getNextPlayer: function() {
-      var playersWithIndices = this.players.map((p, i) => ({player: p, index: i}));
-      var next = _.minBy(playersWithIndices, x => x.player.scores.length * 1e9 + x.index);
+      var playersWithIndices = this.players.map(function(p, i) { return {player: p, index: i};});
+      var next = _.minBy(playersWithIndices, function(x) { return x.player.scores.length * 1e9 + x.index; });
       return next && next.player;
     },
 
@@ -129,7 +129,7 @@ var app = new Vue({
     newGame: function() {
       var confirmation = window.confirm('Are you sure you want to start a new game?');
       if (confirmation) {
-        this.players.forEach(p => p.scores = []);
+        this.players.forEach(function(p) { p.scores = []; });
         this.save();
       }
     },
@@ -144,7 +144,7 @@ var app = new Vue({
     load: function() {
       try {
         var gameData = JSON.parse(localStorage.gameData);
-        this.players = gameData.players.map(p => {
+        this.players = gameData.players.map(function(p) {
           var pl = new Player(p.name);
           pl.scores = p.scores;
           return pl;
@@ -172,7 +172,7 @@ var addUsualPlayers = function() {
   app.addPlayer('Bogdan');
   app.addPlayer('Radu');
   app.addPlayer('Cristi');
-}
+};
 
 // addUsualPlayers();
 // addTestPlayerScores();
