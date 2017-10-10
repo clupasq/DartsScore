@@ -78,10 +78,6 @@ var app = new Vue({
       this.save();
     },
 
-    toggleCummulativeScore: function() {
-      this.showCummulativeScore = !this.showCummulativeScore;
-    },
-
     toggleRemovePlayers: function() {
       this.canRemovePlayers = !this.canRemovePlayers;
     },
@@ -122,10 +118,6 @@ var app = new Vue({
       return `rgb(${level * 30 + 200}, ${255 - level * 10}, ${255 - level * 20})`;
     },
 
-    toggleScoreText: function() {
-      return this.showCummulativeScore ? 'Use normal scores' : 'Use cummulative scores';
-    },
-
     newGame: function() {
       var confirmation = window.confirm('Are you sure you want to start a new game?');
       if (confirmation) {
@@ -135,10 +127,14 @@ var app = new Vue({
     },
 
     save: function() {
+      try {
       localStorage.gameData = JSON.stringify({
         target: this.targetScore,
         players: this.players
       });
+      } catch(e) {
+        // This fails if there's no localStorage, or if iOS is in private browsing mode.
+      }
     },
 
     load: function() {

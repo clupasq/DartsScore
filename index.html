@@ -17,10 +17,16 @@
       <option>301</option>
       <option>501</option>
     </select>
-    <button class="btn btn-default" v-on:click="newGame()">New Game</button>
-    <button class="btn btn-default" v-on:click="addPlayer()">Add Player</button>
-    <button class="btn btn-default" v-on:click="toggleRemovePlayers()">Remove Player(s)</button>
-    <button class="btn btn-default" v-on:click="toggleCummulativeScore()">{{ toggleScoreText() }}</button>
+    <button class="btn btn-default" v-on:click="newGame()">New<br/>Game</button>
+    <button class="btn btn-default" v-on:click="addPlayer()">Add<br/>Player</button>
+    <button class="btn btn-default" v-on:click="toggleRemovePlayers()">Remove<br/>Player(s)</button>
+
+    <button class="btn btn-default" v-on:click="showCummulativeScore=true;" v-if="!showCummulativeScore">
+      Cummulative<br/>Scores
+    </button>
+    <button class="btn btn-default" v-on:click="showCummulativeScore=false;" v-if="showCummulativeScore">
+      Normal<br/>Scores
+    </button>
   </h1>
   <div class="row well">
     <form onsubmit="return false;">
